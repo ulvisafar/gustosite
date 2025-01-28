@@ -1,32 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="az">
 <head>
-    <base target="_top">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="module" src="src/firebase.js"></script>
     <title>Gusto Pizza</title>
-    <link rel="stylesheet" href="assets/css/main.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- PixiJS -->
+    <script src="https://pixijs.download/v8.0.0/pixi.min.js"></script>
+    
+    <!-- Firebase -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="nav-wrapper">
+        <div class="nav-content">
+            <a href="#" class="logo">Gusto Pizza</a>
+            <div class="nav-links">
+                <a href="#menu" onclick="openMenu()">Menu</a>
+                <a href="#about">Haqqımızda</a>
+                <a href="#contact">Əlaqə</a>
+            </div>
+        </div>
+    </nav>
+
     <!-- Hero Section -->
-    <div class="hero-section">
-        <img src="https://images.unsplash.com/photo-1593504049359-74330189a345?w=500&auto=format&fit=crop&q=60" 
-             alt="Delicious Pizza" 
-             class="hero-image">
+    <section class="hero">
+        <div class="hero-canvas"></div>
         <div class="hero-content">
-            <h1>Gusto Pizza</h1>
-            <p>Ənənəvi Napoli üsulu ilə hazırlanır</p>
+            <h1 class="hero-title">Gusto Pizza</h1>
+            <p class="hero-subtitle">Ən dadlı Neapolitan pizzaları</p>
+            <a href="#menu" class="btn-vintage" onclick="openMenu()">Sifariş Et</a>
         </div>
-    </div>
+    </section>
 
-    <header class="header">
-        <div class="container header-content">
-            <div class="logo">Gusto Pizza</div>
-            <button class="menu-button" onclick="openMenu()">Menyu</button>
-        </div>
-    </header>
-
+    <!-- Menu Panel -->
     <div class="menu-panel" id="menuPanel">
         <div class="container">
             <div class="menu-header">
@@ -42,12 +58,58 @@
         </div>
     </div>
 
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Haqqımızda</h2>
+            <div class="about-content fade-in">
+                <div class="about-text">
+                    <p>Gusto Pizza 2024-cü ildən fəaliyyət göstərir. Biz müştərilərimizə ən keyfiyyətli və dadlı pizzaları təqdim edirik.</p>
+                    <p>İtalyan üslubunda hazırlanan pizzalarımız, təzə məhsullar və xüsusi reseptlərlə hazırlanır.</p>
+                </div>
+                <div class="about-image">
+                    <img src="assets/images/about.jpg" alt="About Gusto Pizza">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Əlaqə</h2>
+            <div class="contact-content fade-in">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <p>+994 51 970 70 85</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>info@gustopizza.az</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Bakı, Azərbaycan</p>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Section -->
     <div class="cart-section" id="cartSection">
         <div class="container">
             <div id="cartItems"></div>
         </div>
     </div>
 
+    <!-- Order Process Panel -->
     <div class="order-process-panel" id="orderProcessPanel">
         <h2 style="margin-bottom: 20px; color: var(--primary-yellow);">Sifarişinizin Statusu</h2>
         
@@ -84,15 +146,18 @@
         </div>
 
         <div class="refresh-status">
-            <div id="lastRefreshTime" class="last-refresh-time">
-                Son yeniləmə: 
-            </div>
+            <div id="lastRefreshTime" class="last-refresh-time"></div>
             <div class="auto-refresh-info">
                 Status hər 30 saniyədə bir avtomatik yenilənir
             </div>
         </div>
     </div>
 
-    <script src="assets/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script type="module" src="assets/js/webgl-background.js"></script>
+    <script type="module" src="assets/js/firebase-config.js"></script>
+    <script type="module" src="assets/js/main.js"></script>
+    <script type="module" src="assets/js/creative-background.js"></script>
+    <script src="assets/js/menu.js"></script>
 </body>
 </html>

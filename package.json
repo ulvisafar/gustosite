@@ -1,6 +1,7 @@
 {
   "name": "gustosite",
   "version": "1.0.0",
+  "type": "module", 
   "description": "Pizza sifarişi üçün online platforma. Real-time sifariş izləmə və WhatsApp inteqrasiyası ilə.",
   "main": "index.js",
   "scripts": {

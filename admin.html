@@ -1,122 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="az">
 <head>
-    <base target="_top">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="module" src="assets/js/admin.js"></script>
-    <title>Gusto Pizza Admin</title>
+    <title>Admin Panel - Gusto Pizza</title>
     <link rel="stylesheet" href="assets/css/admin.css">
 </head>
 <body>
-    <div class="admin-container">
-        <header class="admin-header">
-            <h1>Gusto Pizza Admin Panel</h1>
-            <div class="header-controls">
-                <button onclick="refreshOrders()" class="refresh-btn">
-                    🔄 Yenilə
-                </button>
-                <button onclick="exportOrders()" class="export-btn">
-                    📊 Export
-                </button>
-            </div>
-        </header>
+    <!-- Header -->
+    <header>
+        <h1>Gusto Pizza Admin Panel</h1>
+        <nav>
+            <button id="showOrders">Sifarişlər</button>
+            <button id="showProducts">Məhsullar</button>
+            <button id="showCustomers">Müştərilər</button>
+        </nav>
+    </header>
 
-        <div class="admin-content">
-            <div class="orders-section">
-                <div class="orders-header">
-                    <h2>Sifarişlər</h2>
-                    <div class="filter-controls">
-                        <select id="statusFilter" onchange="filterOrders()">
-                            <option value="all">Bütün Sifarişlər</option>
-                            <option value="Sifariş Göndərildi">Yeni</option>
-                            <option value="Sifariş Qəbul Edildi">Qəbul Edilmiş</option>
-                            <option value="Hazırlanır">Hazırlanır</option>
-                            <option value="Çatdırılmada">Çatdırılmada</option>
-                        </select>
-                        <input type="date" id="dateFilter" onchange="filterOrders()">
-                    </div>
-                </div>
-
-                <div class="orders-list" id="ordersList">
-                    <!-- Orders will be loaded here -->
-                </div>
-            </div>
-
-            <div class="products-section">
-                <div class="products-header">
-                    <h2>Məhsullar</h2>
-                    <button onclick="showAddProductForm()" class="add-product-btn">
-                        + Yeni Məhsul
-                    </button>
-                </div>
-
-                <div class="products-list" id="productsList">
-                    <!-- Products will be loaded here -->
-                </div>
+    <!-- Orders Section -->
+    <section id="ordersSection">
+        <div class="section-header">
+            <h2>Sifarişlər</h2>
+            <div class="filters">
+                <button id="filterAll">Hamısı</button>
+                <button id="filterNew">Yeni</button>
+                <button id="filterPreparing">Hazırlanır</button>
+                <button id="filterDelivering">Çatdırılır</button>
+                <button id="filterCompleted">Tamamlandı</button>
+                <button id="filterCancelled">Ləğv edildi</button>
+                <button id="exportBtn" class="export-btn">Export CSV</button>
             </div>
         </div>
-    </div>
+        <div id="ordersList" class="orders-container">
+            <!-- Orders will be displayed here -->
+        </div>
+    </section>
 
-    <!-- Add/Edit Product Modal -->
+    <!-- Products Section -->
+    <section id="productsSection" style="display: none;">
+        <div class="section-header">
+            <h2>Məhsullar</h2>
+            <button id="addProductBtn" class="add-btn">Yeni Məhsul</button>
+        </div>
+        <div id="productsList" class="products-container">
+            <!-- Products will be displayed here -->
+        </div>
+    </section>
+
+    <!-- Customers Section -->
+    <section id="customersSection" style="display: none;">
+        <div class="section-header">
+            <h2>Müştərilər</h2>
+            <button id="exportCustomersBtn" class="export-btn">Export CSV</button>
+        </div>
+        <div id="customersList" class="customers-container">
+            <!-- Customers will be displayed here -->
+        </div>
+    </section>
+
+    <!-- Product Modal -->
     <div id="productModal" class="modal">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeProductModal()">&times;</span>
-            <h2 id="modalTitle">Yeni Məhsul</h2>
-            
-            <form id="productForm" onsubmit="handleProductSubmit(event)">
+            <h3>Məhsul</h3>
+            <form id="productForm">
                 <div class="form-group">
-                    <label for="productName">Ad</label>
+                    <label for="productName">Ad:</label>
                     <input type="text" id="productName" required>
                 </div>
-
                 <div class="form-group">
-                    <label for="productDescription">Təsvir</label>
+                    <label for="productDescription">Təsvir:</label>
                     <textarea id="productDescription" required></textarea>
                 </div>
-
                 <div class="form-group">
-                    <label for="productPrice">Qiymət (₼)</label>
+                    <label for="productPrice">Qiymət (₼):</label>
                     <input type="number" id="productPrice" step="0.01" required>
                 </div>
-
                 <div class="form-group">
-                    <label for="productImage">Şəkil URL</label>
+                    <label for="productImage">Şəkil URL:</label>
                     <input type="url" id="productImage" required>
                 </div>
-
-                <div class="form-group checkbox-group">
+                <div class="form-group">
                     <label>
                         <input type="checkbox" id="productIsPopular">
                         Popular
                     </label>
                 </div>
-
-                <input type="hidden" id="productId">
-                <button type="submit" class="submit-btn">Yadda Saxla</button>
+                <div class="form-actions">
+                    <button type="submit">Yadda saxla</button>
+                    <button type="button" id="cancelBtn">İmtina</button>
+                </div>
             </form>
         </div>
     </div>
 
-    <!-- Order Details Modal -->
-    <div id="orderModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeOrderModal()">&times;</span>
-            <h2>Sifariş Detalları</h2>
-            <div id="orderDetails"></div>
-            
-            <div class="status-update-section">
-                <h3>Status Yenilə</h3>
-                <select id="statusUpdate" onchange="updateOrderStatus(this.value)">
-                    <option value="Sifariş Göndərildi">Yeni</option>
-                    <option value="Sifariş Qəbul Edildi">Qəbul Edildi</option>
-                    <option value="Hazırlanır">Hazırlanır</option>
-                    <option value="Çatdırılmada">Çatdırılmada</option>
-                </select>
-            </div>
-        </div>
-    </div>
-
-    <script src="assets/js/admin.js"></script>
+    <!-- Scripts -->
+    <script type="module" src="assets/js/admin.js"></script>
 </body>
 </html>

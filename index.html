@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="src/firebase.js"></script>
+    <title>Gusto Pizza</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <img src="https://images.unsplash.com/photo-1593504049359-74330189a345?w=500&auto=format&fit=crop&q=60" 
+             alt="Delicious Pizza" 
+             class="hero-image">
+        <div class="hero-content">
+            <h1>Gusto Pizza</h1>
+            <p>Ənənəvi Napoli üsulu ilə hazırlanır</p>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="container header-content">
+            <div class="logo">Gusto Pizza</div>
+            <button class="menu-button" onclick="openMenu()">Menyu</button>
+        </div>
+    </header>
+
+    <div class="menu-panel" id="menuPanel">
+        <div class="container">
+            <div class="menu-header">
+                <div>
+                    <h2 class="menu-title">Pizzalarımız</h2>
+                    <p>Ənənəvi Napoli üsulu ilə hazırlanır</p>
+                </div>
+                <button class="close-menu" onclick="closeMenu()">&times;</button>
+            </div>
+            <div class="menu-grid" id="products">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-section" id="cartSection">
+        <div class="container">
+            <div id="cartItems"></div>
+        </div>
+    </div>
+
+    <div class="order-process-panel" id="orderProcessPanel">
+        <h2 style="margin-bottom: 20px; color: var(--primary-yellow);">Sifarişinizin Statusu</h2>
+        
+        <div class="order-phase" id="phase-sent">
+            <div class="phase-icon">📨</div>
+            <div class="phase-text">
+                <h4>Sifariş Göndərildi</h4>
+                <p>Sifarişiniz uğurla göndərildi!</p>
+            </div>
+        </div>
+
+        <div class="order-phase" id="phase-accepted">
+            <div class="phase-icon">👨‍🍳</div>
+            <div class="phase-text">
+                <h4>Sifariş Qəbul Edildi</h4>
+                <p>Restoranımız sifarişinizi qəbul etdi</p>
+            </div>
+        </div>
+
+        <div class="order-phase" id="phase-preparation">
+            <div class="phase-icon">🍕</div>
+            <div class="phase-text">
+                <h4>Hazırlanır</h4>
+                <p>Pizzanız hazırlanır</p>
+            </div>
+        </div>
+
+        <div class="order-phase" id="phase-delivery">
+            <div class="phase-icon">🛵</div>
+            <div class="phase-text">
+                <h4>Çatdırılmada</h4>
+                <p>Sifarişiniz yoldadır</p>
+            </div>
+        </div>
+
+        <div class="refresh-status">
+            <div id="lastRefreshTime" class="last-refresh-time">
+                Son yeniləmə: 
+            </div>
+            <div class="auto-refresh-info">
+                Status hər 30 saniyədə bir avtomatik yenilənir
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
